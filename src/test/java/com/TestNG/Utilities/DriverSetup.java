@@ -15,42 +15,44 @@ public class DriverSetup
 
     public static WebDriver getDriver()
     {
-        String SelectedBrowser = ReadConfig.getConfig("browser");
 
         if (driver==null) {
+            String SelectedBrowser = ReadConfig.getConfig("browser");
 
             switch (SelectedBrowser) {
-                case "chrome":
+                case "chrome" -> {
                     WebDriverManager.chromedriver().setup();
                     driver = new ChromeDriver();
-                    break;
-                case "firefox":
+                }
+                case "firefox" -> {
                     WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver();
-                    break;
-                case "edge":
+                }
+                case "edge" -> {
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
-                    break;
-                case "safari":
+                }
+                case "safari" -> {
                     WebDriverManager.getInstance(SafariDriver.class).setup();
                     driver = new SafariDriver();
-                    break;
-                case "ie":
+                }
+                case "ie" -> {
                     WebDriverManager.iedriver().setup();
                     driver = new InternetExplorerDriver();
-                    break;
-                case "opera":
+                }
+                case "opera" -> {
                     WebDriverManager.operadriver().setup();
                     driver = new OperaDriver();
-                    break;
+                }
             }
         }
-        else
-        {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        }
+        Tools.sleep(1000);
+        // else
+        // {
+        //System.out.println("Check browser - config.properities");
+        //WebDriverManager.chromedriver().setup();
+        //driver = new ChromeDriver();
+        // }
         return driver;
     }
 

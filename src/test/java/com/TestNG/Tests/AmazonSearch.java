@@ -9,37 +9,33 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 
-import java.sql.Driver;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AmazonSearch {
 
+    // Sample framework to SDET - using Java TestNG
+    //
+    // Objective: If a top-rated product listed on Amazon does not appear on the
+    // first page of google search, competition can be achived with google advertisement.
+    //
+    // STEPS:
+    // Search amazon: search product name on amazon.com - search box.
+    // Order search results : Av. Costumer Review
+    // Get first product details: name, rate count, store name, price and basic content
+    // Navigate to google.com
+    // Search product and seller name on google.com
+    // Check results for store name
+    // Report results
+
     @Test
     public void SearchBox()
-
     {
-        // Sample framework to SDET - using Java TestNG
-        //
-        // Objective: If a top-rated product listed on Amazon does not appear on the
-        // first page of google search, competition can be achived with google advertisement.
-        //
-        // STEPS:
-        // Search amazon: search product name on amazon.com - search box.
-        // Order search results : Av. Costumer Review
-        // Get first product details: name, rate count, store name, price and basic content
-        // Navigate to google.com
-        // Search product and seller name on google.com
-        // Check results for store name
-        // Report results
-
         System.out.println(ReadConfig.getConfig("framework") + " " + ReadConfig.getConfig("version") + " - SDET: " + ReadConfig.getConfig("SDET") + " " );
         System.out.println("Project Name: " + ReadConfig.getConfig("ProjectName") + " - Selected Browser: " + ReadConfig.getConfig("browser") + " "  );
 
-
         WebDriver driver = DriverSetup.getDriver();
         driver.manage().window().maximize();
-
         driver.navigate().to("https://www.amazon.com/");
 
 
@@ -89,8 +85,8 @@ public class AmazonSearch {
 
         driver.findElement(By.xpath("//div[@class='a-section a-spacing-medium']//div[@class='a-row a-size-small']")).click();
 
-        String amazonTopSeller =  driver.findElement(By.xpath("//*[@id='bylineInfo']")).getText().replaceAll("Visit the ","").replaceAll("Store","");
-        System.out.println("Amazon Store Name :" + amazonTopSeller );
+        String TopRatedSellerStore =  driver.findElement(By.xpath("//*[@id='bylineInfo']")).getText().replaceAll("Visit the ","").replaceAll("Store","");
+        System.out.println("Amazon Store Name :" + TopRatedSellerStore );
         System.out.println("Product Link :" + driver.getCurrentUrl() );
 
         // Navigation Helper
@@ -103,13 +99,13 @@ public class AmazonSearch {
 
 
         driver.navigate().to("https://www.google.com/");
-        driver.findElement(By.name("q")).sendKeys(Product + " " + amazonTopSeller);
+        driver.findElement(By.name("q")).sendKeys(Product + " " + TopRatedSellerStore);
         driver.findElement(By.name("btnK")).submit();
 
         // Thread alternative:
         driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
 
-        System.out.println("Google Search :" + Product + " " + amazonTopSeller);
+        System.out.println("Google Search :" + Product + " " + TopRatedSellerStore);
         System.out.println("Google Search Link :" + driver.getCurrentUrl() );
         if(driver.getPageSource().contains("amazon"))
         {
