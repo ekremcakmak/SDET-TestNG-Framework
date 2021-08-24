@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class AmazonSearch_POM {
 
-    // Sample framework to SDET - using Java TestNG with OOP
+    // Sample framework to SDET - using Java TestNG with POM
     //
     // Objective: If a top-rated product listed on Amazon does not appear on the
     // first page of google search, competition can be achived with google advertisement.
